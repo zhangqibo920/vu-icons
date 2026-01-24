@@ -1,0 +1,34 @@
+<script setup lang="ts">
+const name = 'VuVolumeUp'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: ''
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color
+}))
+</script>
+
+<template>
+  <!-- #ifdef H5 -->
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 5L6 9H2h4v5H2h0l4 4 5-4h6l4 4h0l-7-4h0l-5-4v4h0v4l2-4-5-5h0-4 4V5h5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
+  </svg>
+  <!-- #endif -->
+
+  <!-- #ifndef H5 -->
+  <rich-text :nodes="`<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='width:${style.width};height:${style.height};color:${style.color}'><!-- SVG_PATH_CONTENT --></svg>`" />
+  <!-- #endif -->
+</template>

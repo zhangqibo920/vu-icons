@@ -1,0 +1,28 @@
+<script setup lang="ts">
+const name = 'VuBus'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: ''
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color
+}))
+</script>
+
+<template>
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-2.7-.6-4.5-2.1c-.8-.2-1.5-1-1.5-1.9V3c0-.6.4-1 1-1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/>
+  </svg>
+</template>
