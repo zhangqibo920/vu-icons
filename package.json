@@ -30,11 +30,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/vu-icons.git"
+    "url": "https://github.com/zhangqibo920/uv-icons.git"
   },
-  "homepage": "https://github.com/your-username/vu-icons#readme",
+  "homepage": "https://github.com/zhangqibo920/uv-icons#readme",
   "bugs": {
-    "url": "https://github.com/your-username/vu-icons/issues"
+    "url": "https://github.com/zhangqibo920/uv-icons/issues"
   },
   "peerDependencies": {
     "vue": "^3.2.0"
