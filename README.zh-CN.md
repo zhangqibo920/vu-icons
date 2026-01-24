@@ -1,6 +1,5 @@
-# VU-Icons
-
 <div align="center">
+# VU-Icons
 
 ![npm version](https://img.shields.io/npm/v/vu-icons)
 ![npm downloads](https://img.shields.io/npm/dm/vu-icons)
