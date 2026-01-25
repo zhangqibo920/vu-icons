@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./assets/logo.png" width="120" alt="VU-Icons Logo" />
+
 # VU-Icons
 
 ![npm version](https://img.shields.io/npm/v/vu-icons)

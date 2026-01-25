@@ -1,4 +1,7 @@
 <div align="center">
+
+<img src="./assets/logo.png" width="120" alt="VU-Icons Logo" />
+
 # VU-Icons
 
 ![npm version](https://img.shields.io/npm/v/vu-icons)
@@ -75,8 +78,21 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
 | size | number \| string | 24 | 图标尺寸，支持数字（px）或字符串（如 '2rem'、'24px'） |
 | color | string | 'currentColor' | 图标颜色，支持任何有效的 CSS 颜色值 |
 | className | string | '' | 自定义类名 |
+| spin | boolean | false | 是否旋转，适用于加载状态 |
 
 ## 🎨 使用示例
+
+### 加载状态 / 旋转图标
+
+```vue
+<template>
+  <div>
+    <VuLoading :size="24" color="#1890ff" spin />
+    <!-- 任何图标都可以旋转 -->
+    <VuRefresh :size="24" spin />
+  </div>
+</template>
+```
 
 ### 自定义尺寸
 
