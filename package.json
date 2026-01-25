@@ -1,10 +1,11 @@
 {
   "name": "vu-icons",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Vue3 & UniApp SVG图标组件库，支持Tree Shaking按需引入，内置完整TypeScript类型声明",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist"
   ],

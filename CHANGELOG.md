@@ -36,6 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📝 完整的 TypeScript 类型声明
 - 🚀 自动化构建流程
 
+## [1.3.0] - 2026-01-25
+
+### Updated
+- 版本更新
+
 ## [Unreleased]
 
 ### Planned

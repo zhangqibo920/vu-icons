@@ -6,23 +6,37 @@ interface Props {
   size?: number | string
   color?: string
   className?: string
+  spin?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 24,
   color: 'currentColor',
-  className: ''
+  className: '',
+  spin: false
 })
 
 const style = computed(() => ({
   width: typeof props.size === 'number' ? `${props.size}px` : props.size,
   height: typeof props.size === 'number' ? `${props.size}px` : props.size,
-  color: props.color
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
 }))
 </script>
 
 <template>
-  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
     <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3 3H2a3 3 0 00-3-3V6a4 4 0 014-4zM22 3h-6a4 4 0 00-4 4v14a3 3 0 003 3h7a3 3 0 003-3V6a4 4 0 00-4-4z"/>
   </svg>
 </template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

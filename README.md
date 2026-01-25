@@ -76,8 +76,21 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
 | size | number \| string | 24 | Icon size, supports number (px) or string (e.g., '2rem', '24px') |
 | color | string | 'currentColor' | Icon color, supports any valid CSS color value |
 | className | string | '' | Custom class name |
+| spin | boolean | false | Whether to spin the icon, useful for loading states |
 
 ## 🎨 Usage Examples
+
+### Loading Icon
+
+```vue
+<template>
+  <div>
+    <VuLoading :size="24" color="#1890ff" spin />
+    <!-- Or make any icon spin -->
+    <VuRefresh :size="24" spin />
+  </div>
+</template>
+```
 
 ### Custom Size
 
