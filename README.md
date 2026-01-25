@@ -1,9 +1,12 @@
 <div align="center">
 
-<img src="./assets/logo.png" width="120" alt="VU-Icons Logo" />
+<a href="https://vuicons.qiboz.top/" target="_blank">
+  <img src="./assets/logo.png" width="120" alt="VU-Icons Logo" />
+</a>
 
 # VU-Icons
 
+[![Website](https://img.shields.io/badge/Website-vuicons.qiboz.top-blue)](https://vuicons.qiboz.top/)
 ![npm version](https://img.shields.io/npm/v/vu-icons)
 ![npm downloads](https://img.shields.io/npm/dm/vu-icons)
 ![license](https://img.shields.io/npm/l/vu-icons)
