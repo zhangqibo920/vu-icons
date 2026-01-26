@@ -27,7 +27,7 @@ const style = computed(() => ({
 <template>
   <!-- #ifdef H5 -->
   <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11 5L6 9H2h4v5H2h0l4 4 5-4h6l4 4h0l-7-4h0l-5-4v4h0v4l2-4-5-5h0-4 4V5h5zM23 9l-6 6M17 9l6 6"/>
+    <path d="M16 9a5 5 0 01.95 2.293m2.414-5.657a9 9 0 011.889 9.96M2 2l20 20M7 7l-.587.587A1.4 1.4 0 015.416 8H3a1 1 0 00-1 1v6a1 1 0 001 1h2.416a1.4 1.4 0 01.997.413l3.383 3.384A.705.705 0 0011 19.298V11M9.828 4.172A.686.686 0 0111 4.657v.686"/>
   </svg>
   <!-- #endif -->
 

@@ -1,0 +1,42 @@
+<script setup lang="ts">
+const name = 'VuArrowBigRightDash'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+  spin?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: '',
+  spin: false
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
+}))
+</script>
+
+<template>
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 9a1 1 0 001-1V5.061a1 1 0 011.811-.75l6.836 6.836a1.207 1.207 0 010 1.707l-6.836 6.835a1 1 0 01-1.811-.75V16a1 1 0 00-1-1H9a1 1 0 01-1-1v-4a1 1 0 011-1zM4 9v6"/>
+  </svg>
+</template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

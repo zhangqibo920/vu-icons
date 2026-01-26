@@ -1,0 +1,42 @@
+<script setup lang="ts">
+const name = 'VuSplinePointer'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+  spin?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: '',
+  spin: false
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
+}))
+</script>
+
+<template>
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.034 12.681a.498.498 0 01.647-.647l9 3.5a.5.5 0 01-.033.943l-3.444 1.068a1 1 0 00-.66.66l-1.067 3.443a.5.5 0 01-.943.033zM5 17A12 12 0 0117 5"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/>
+  </svg>
+</template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

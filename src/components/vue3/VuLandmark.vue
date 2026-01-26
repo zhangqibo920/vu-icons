@@ -1,0 +1,42 @@
+<script setup lang="ts">
+const name = 'VuLandmark'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+  spin?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: '',
+  spin: false
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
+}))
+</script>
+
+<template>
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 18v-7m1.12-8.802a2 2 0 011.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949zM14 18v-7m4 7v-7M3 22h18M6 18v-7"/>
+  </svg>
+</template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

@@ -97,6 +97,25 @@ ${typeDefinitions}
 `
 }
 
+function getAllSvgFiles(dir: string, fileList: string[] = []): string[] {
+  const files = fs.readdirSync(dir)
+
+  files.forEach(file => {
+    const filePath = path.join(dir, file)
+    const stat = fs.statSync(filePath)
+
+    if (stat.isDirectory()) {
+      getAllSvgFiles(filePath, fileList)
+    } else {
+      if (file.endsWith('.svg')) {
+        fileList.push(filePath)
+      }
+    }
+  })
+
+  return fileList
+}
+
 function buildComponents(): void {
   console.log('🚀 Starting component generation...')
 
@@ -104,7 +123,7 @@ function buildComponents(): void {
   ensureDir(VUE3_OUTPUT_DIR)
   ensureDir(UNIAPP_OUTPUT_DIR)
 
-  const svgFiles = fs.readdirSync(ICONS_DIR).filter(file => file.endsWith('.svg'))
+  const svgFiles = getAllSvgFiles(ICONS_DIR)
   
   if (svgFiles.length === 0) {
     console.log('⚠️  No SVG files found in icons/optimized directory')
@@ -115,12 +134,22 @@ function buildComponents(): void {
   const vue3Template = readFileSync(VUE3_TEMPLATE_PATH)
   const uniappTemplate = readFileSync(UNIAPP_TEMPLATE_PATH)
 
-  svgFiles.forEach(svgFile => {
-    const svgContent = readFileSync(path.join(ICONS_DIR, svgFile))
-    const componentName = toComponentName(svgFile)
+  const processedNames: string[] = []
 
-    const vue3Component = generateVue3Component(vue3Template, svgFile, svgContent)
-    const uniAppComponent = generateUniAppComponent(uniappTemplate, svgFile, svgContent)
+  svgFiles.forEach(svgFilePath => {
+    const svgContent = readFileSync(svgFilePath)
+    const svgFileName = path.basename(svgFilePath) // Use basename to keep component name flat
+    const componentName = toComponentName(svgFileName)
+
+    // Check for duplicate component names
+    if (processedNames.includes(svgFileName)) {
+        console.warn(`⚠️  Duplicate icon name found: ${svgFileName}. Skipping ${svgFilePath}`)
+        return
+    }
+    processedNames.push(svgFileName)
+
+    const vue3Component = generateVue3Component(vue3Template, svgFileName, svgContent)
+    const uniAppComponent = generateUniAppComponent(uniappTemplate, svgFileName, svgContent)
 
     writeFileSync(path.join(VUE3_OUTPUT_DIR, `${componentName}.vue`), vue3Component)
     writeFileSync(path.join(UNIAPP_OUTPUT_DIR, `${componentName}.vue`), uniAppComponent)
@@ -128,13 +157,13 @@ function buildComponents(): void {
     console.log(`✅ Generated: ${componentName}`)
   })
 
-  const indexContent = generateIndexFile(svgFiles)
+  const indexContent = generateIndexFile(processedNames)
   writeFileSync(INDEX_FILE, indexContent)
 
-  const typesContent = generateTypesFile(svgFiles)
+  const typesContent = generateTypesFile(processedNames)
   writeFileSync(TYPES_FILE, typesContent)
 
-  console.log(`\n✨ Successfully generated ${svgFiles.length} components`)
+  console.log(`\n✨ Successfully generated ${processedNames.length} components`)
   console.log(`📦 Vue3 components: ${VUE3_OUTPUT_DIR}`)
   console.log(`📦 UniApp components: ${UNIAPP_OUTPUT_DIR}`)
   console.log(`📄 Index file: ${INDEX_FILE}`)

@@ -16,7 +16,7 @@ function clean(done) {
 
 function optimizeSvg() {
   return gulp
-    .src(`${SRC_DIR}/*.svg`)
+    .src(`${SRC_DIR}/**/*.svg`)
     .pipe(
       svgo({
         plugins: [

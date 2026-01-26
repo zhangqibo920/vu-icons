@@ -1,0 +1,42 @@
+<script setup lang="ts">
+const name = 'VuDumbbell'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+  spin?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: '',
+  spin: false
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
+}))
+</script>
+
+<template>
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.596 12.768a2 2 0 102.829-2.829l-1.768-1.767a2 2 0 002.828-2.829l-2.828-2.828a2 2 0 00-2.829 2.828l-1.767-1.768a2 2 0 10-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 102.829-2.828l1.767 1.768a2 2 0 102.829-2.829l-6.364-6.364a2 2 0 10-2.829 2.829l1.768 1.767a2 2 0 00-2.828 2.829zM9.6 14.4l4.8-4.8"/>
+  </svg>
+</template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

@@ -1,0 +1,48 @@
+<script setup lang="ts">
+const name = 'VuFlower'
+import { computed } from 'vue'
+
+interface Props {
+  size?: number | string
+  color?: string
+  className?: string
+  spin?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor',
+  className: '',
+  spin: false
+})
+
+const style = computed(() => ({
+  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
+  color: props.color,
+  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
+}))
+</script>
+
+<template>
+  <!-- #ifdef H5 -->
+  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 117.5 12 4.5 4.5 0 1112 7.5a4.5 4.5 0 114.5 4.5 4.5 4.5 0 11-4.5 4.5m0-9V9m-4.5 3H9m7.5 0H15m-3 4.5V15M8 8l1.88 1.88m4.24 0L16 8m-8 8l1.88-1.88m4.24 0L16 16"/>
+  </svg>
+  <!-- #endif -->
+
+  <!-- #ifndef H5 -->
+  <rich-text :class="className" :style="style" :nodes="`<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg' style='width:${style.width};height:${style.height};color:${style.color}'><!-- SVG_PATH_CONTENT --></svg>`" />
+  <!-- #endif -->
+</template>
+
+<style>
+@keyframes vu-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
