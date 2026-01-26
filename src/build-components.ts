@@ -5,6 +5,7 @@ const ICONS_DIR = path.join(__dirname, 'icons/optimized')
 const VUE3_OUTPUT_DIR = path.join(__dirname, 'components/vue3')
 const UNIAPP_OUTPUT_DIR = path.join(__dirname, 'components/uniapp')
 const INDEX_FILE = path.join(__dirname, 'index.ts')
+const UNIAPP_INDEX_FILE = path.join(__dirname, 'components/uniapp/index.ts')
 const TYPES_FILE = path.join(__dirname, 'index.d.ts')
 
 const VUE3_TEMPLATE_PATH = path.join(__dirname, 'components/Vue3IconTemplate.ts')
@@ -64,11 +65,12 @@ function generateUniAppComponent(
     .replace(/<script setup lang="ts">/, `<script setup lang="ts">\nconst name = '${componentName}'`)
 }
 
-function generateIndexFile(iconNames: string[]): string {
+function generateIndexFile(iconNames: string[], isUniApp = false): string {
   const imports = iconNames
     .map(name => {
       const componentName = toComponentName(name)
-      return `export { default as ${componentName} } from './components/vue3/${componentName}.vue'`
+      const importPath = isUniApp ? `./${componentName}.vue` : `./components/vue3/${componentName}.vue`
+      return `export { default as ${componentName} } from '${importPath}'`
     })
     .join('\n')
 
@@ -160,6 +162,10 @@ function buildComponents(): void {
   const indexContent = generateIndexFile(processedNames)
   writeFileSync(INDEX_FILE, indexContent)
 
+
+
+  const uniappIndexContent = generateIndexFile(processedNames, true)
+  writeFileSync(UNIAPP_INDEX_FILE, uniappIndexContent)
   const typesContent = generateTypesFile(processedNames)
   writeFileSync(TYPES_FILE, typesContent)
 

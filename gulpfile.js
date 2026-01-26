@@ -82,7 +82,7 @@ function copyTypes() {
 
 function copyUniApp() {
   return gulp
-    .src('src/components/uniapp/*.vue')
+    .src('src/components/uniapp/*')
     .pipe(gulp.dest('dist/uniapp'))
 }
 
