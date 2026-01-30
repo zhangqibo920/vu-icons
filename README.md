@@ -156,50 +156,7 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
 
 ## 📋 Available Icons
 
-| Icon | Component | Description |
-|------|---------|------|
-| 👤 | VuUser | User |
-| 🔍 | VuSearch | Search |
-| ⭐ | VuStar | Star |
-| 🏠 | VuHome | Home |
-| ⚙️ | VuSettings | Settings |
-| 💬 | VuMessage | Message |
-| ℹ️ | VuInfo | Info |
-| ❌ | VuClose | Close |
-| ➕ | VuAdd | Add |
-| ✏️ | VuEdit | Edit |
-| ❤️ | VuFavorite | Favorite |
-| ⬅️ | VuArrowLeft | Arrow Left |
-| ➡️ | VuArrowRight | Arrow Right |
-| ⬆️ | VuArrowUp | Arrow Up |
-| ⬇️ | VuArrowDown | Arrow Down |
-| ✅ | VuCheck | Check |
-| 🗑️ | VuDelete | Delete |
-| ⬇️ | VuDownload | Download |
-| ⬆️ | VuUpload | Upload |
-| 🔗 | VuShare | Share |
-| 👍 | VuLike | Like |
-| 👎 | VuDislike | Dislike |
-| 🔍 | VuFilter | Filter |
-| 📊 | VuSort | Sort |
-| 🔄 | VuRefresh | Refresh |
-| 🔒 | VuLock | Lock |
-| 🔓 | VuUnlock | Unlock |
-| 🔔 | VuBell | Bell |
-| 📷 | VuCamera | Camera |
-| 🖼️ | VuImage | Image |
-| 🎥 | VuVideo | Video |
-| 🎵 | VuMusic | Music |
-| 📄 | VuFile | File |
-| 📁 | VuFolder | Folder |
-| 🔗 | VuLink | Link |
-| 📋 | VuCopy | Copy |
-| 📌 | VuPaste | Paste |
-| ✂️ | VuCut | Cut |
-| ↩️ | VuUndo | Undo |
-| ↪️ | VuRedo | Redo |
-
-For more icons, please check [ICONS.md](./ICONS.md)
+For more icons, please check [ICONS](https://vuicons.qiboz.top/)
 
 ## 🛠️ Development
 
@@ -252,8 +209,6 @@ npm install
 # Build project
 npm run build
 
-# Check publish preparation
-npm run publish:check
 ```
 
 ## 📝 Changelog
@@ -301,6 +256,6 @@ If this project helps you, please give it a Star to support!
 
 <div align="center">
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by [Qiboz](https://vuicons.qiboz.top/)
 
 </div>

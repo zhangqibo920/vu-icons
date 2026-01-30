@@ -156,50 +156,7 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
 
 ## 📋 可用图标
 
-| 图标 | 组件名 | 说明 |
-|------|---------|------|
-| 👤 | VuUser | 用户 |
-| 🔍 | VuSearch | 搜索 |
-| ⭐ | VuStar | 星星 |
-| 🏠 | VuHome | 首页 |
-| ⚙️ | VuSettings | 设置 |
-| 💬 | VuMessage | 消息 |
-| ℹ️ | VuInfo | 信息 |
-| ❌ | VuClose | 关闭 |
-| ➕ | VuAdd | 添加 |
-| ✏️ | VuEdit | 编辑 |
-| ❤️ | VuFavorite | 收藏 |
-| ⬅️ | VuArrowLeft | 左箭头 |
-| ➡️ | VuArrowRight | 右箭头 |
-| ⬆️ | VuArrowUp | 上箭头 |
-| ⬇️ | VuArrowDown | 下箭头 |
-| ✅ | VuCheck | 对勾 |
-| 🗑️ | VuDelete | 删除 |
-| ⬇️ | VuDownload | 下载 |
-| ⬆️ | VuUpload | 上传 |
-| 🔗 | VuShare | 分享 |
-| 👍 | VuLike | 点赞 |
-| 👎 | VuDislike | 踩 |
-| 🔍 | VuFilter | 筛选 |
-| 📊 | VuSort | 排序 |
-| 🔄 | VuRefresh | 刷新 |
-| 🔒 | VuLock | 锁定 |
-| 🔓 | VuUnlock | 解锁 |
-| 🔔 | VuBell | 通知 |
-| 📷 | VuCamera | 相机 |
-| 🖼️ | VuImage | 图片 |
-| 🎥 | VuVideo | 视频 |
-| 🎵 | VuMusic | 音乐 |
-| 📄 | VuFile | 文件 |
-| 📁 | VuFolder | 文件夹 |
-| 🔗 | VuLink | 链接 |
-| 📋 | VuCopy | 复制 |
-| 📌 | VuPaste | 粘贴 |
-| ✂️ | VuCut | 剪切 |
-| ↩️ | VuUndo | 撤销 |
-| ↪️ | VuRedo | 重做 |
-
-更多图标请查看 [ICONS.md](./ICONS.md)
+更多图标请到官网查看 [ICONS](https://vuicons.qiboz.top/)
 
 ## 🛠️ 开发
 
@@ -252,8 +209,6 @@ npm install
 # 构建项目
 npm run build
 
-# 检查发布准备
-npm run publish:check
 ```
 
 ## 📝 更新日志
@@ -301,6 +256,6 @@ A: 支持 Vue3 和 UniApp，可以在 Web、小程序、App 等平台使用。
 
 <div align="center">
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by [Qiboz](https://vuicons.qiboz.top/)
 
 </div>
