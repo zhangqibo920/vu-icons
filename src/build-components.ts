@@ -8,6 +8,9 @@ const INDEX_FILE = path.join(__dirname, 'index.ts')
 const UNIAPP_INDEX_FILE = path.join(__dirname, 'components/uniapp/index.ts')
 const TYPES_FILE = path.join(__dirname, 'index.d.ts')
 
+const ICONS_JSON_FILE = path.join(__dirname, 'icons.json')
+const WEB_TYPES_FILE = path.join(__dirname, 'web-types.json')
+
 const VUE3_TEMPLATE_PATH = path.join(__dirname, 'components/Vue3IconTemplate.ts')
 const UNIAPP_TEMPLATE_PATH = path.join(__dirname, 'components/UniAppIconTemplate.ts')
 
@@ -34,9 +37,21 @@ function ensureDir(dirPath: string): void {
   }
 }
 
+function resetDir(dirPath: string): void {
+  if (fs.existsSync(dirPath)) {
+    fs.rmSync(dirPath, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 })
+  }
+  fs.mkdirSync(dirPath, { recursive: true })
+}
+
 function extractSvgContent(svgContent: string): string {
   const match = svgContent.match(/<svg[^>]*>([\s\S]*?)<\/svg>/)
   return match ? match[1].trim() : svgContent
+}
+
+function extractViewBox(svgContent: string): string {
+  const match = svgContent.match(/viewBox="([^"]+)"/)
+  return match ? match[1] : '0 0 24 24'
 }
 
 function generateVue3Component(
@@ -46,9 +61,11 @@ function generateVue3Component(
 ): string {
   const componentName = toComponentName(iconName)
   const svgPathContent = extractSvgContent(svgContent)
+  const viewBox = extractViewBox(svgContent)
   
   return template
-    .replace('<!-- SVG_PATH_CONTENT -->', svgPathContent)
+    .replace(/<!-- SVG_PATH_CONTENT -->/g, svgPathContent)
+    .replace(/<!-- VIEW_BOX -->/g, viewBox)
     .replace(/<script setup lang="ts">/, `<script setup lang="ts">\nconst name = '${componentName}'`)
 }
 
@@ -59,9 +76,11 @@ function generateUniAppComponent(
 ): string {
   const componentName = toComponentName(iconName)
   const svgPathContent = extractSvgContent(svgContent)
+  const viewBox = extractViewBox(svgContent)
   
   return template
-    .replace('<!-- SVG_PATH_CONTENT -->', svgPathContent)
+    .replace(/<!-- SVG_PATH_CONTENT -->/g, svgPathContent)
+    .replace(/<!-- VIEW_BOX -->/g, viewBox)
     .replace(/<script setup lang="ts">/, `<script setup lang="ts">\nconst name = '${componentName}'`)
 }
 
@@ -88,15 +107,87 @@ function generateTypesFile(iconNames: string[]): string {
   return `import { DefineComponent } from 'vue'
 
 export interface IconProps {
+  /**
+   * Icon size, supports number (px) or string (e.g. '1rem', '24px')
+   * @default 24
+   */
   size?: number | string
+  /**
+   * Icon color
+   * @default 'currentColor'
+   */
   color?: string
+  /**
+   * Custom class name
+   * @default ''
+   */
   className?: string
+  /**
+   * Whether to spin the icon
+   * @default false
+   */
+  spin?: boolean
 }
 
 declare module 'vu-icons' {
 ${typeDefinitions}
 }
+
+declare module 'vu-icons/uniapp' {
+${typeDefinitions}
+}
 `
+}
+
+function generateWebTypes(iconNames: string[]): string {
+  const components = iconNames.map(name => {
+    const componentName = toComponentName(name)
+    return {
+      "name": componentName,
+      "source": {
+        "symbol": componentName
+      },
+      "description": `Vue 3 & UniApp Icon ${componentName}`,
+      "props": [
+        {
+          "name": "size",
+          "type": ["number", "string"],
+          "default": "24",
+          "description": "Icon size"
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "default": "currentColor",
+          "description": "Icon color"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "default": "",
+          "description": "Custom class name"
+        },
+        {
+          "name": "spin",
+          "type": "boolean",
+          "default": "false",
+          "description": "Spin animation"
+        }
+      ]
+    }
+  })
+
+  return JSON.stringify({
+    "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
+    "framework": "vue",
+    "name": "vu-icons",
+    "version": require('../package.json').version,
+    "contributions": {
+      "html": {
+        "tags": components
+      }
+    }
+  }, null, 2)
 }
 
 function getAllSvgFiles(dir: string, fileList: string[] = []): string[] {
@@ -122,10 +213,10 @@ function buildComponents(): void {
   console.log('🚀 Starting component generation...')
 
   ensureDir(ICONS_DIR)
-  ensureDir(VUE3_OUTPUT_DIR)
-  ensureDir(UNIAPP_OUTPUT_DIR)
+  resetDir(VUE3_OUTPUT_DIR)
+  resetDir(UNIAPP_OUTPUT_DIR)
 
-  const svgFiles = getAllSvgFiles(ICONS_DIR)
+  const svgFiles = getAllSvgFiles(ICONS_DIR).sort((a, b) => a.localeCompare(b))
   
   if (svgFiles.length === 0) {
     console.log('⚠️  No SVG files found in icons/optimized directory')
@@ -137,6 +228,7 @@ function buildComponents(): void {
   const uniappTemplate = readFileSync(UNIAPP_TEMPLATE_PATH)
 
   const processedNames: string[] = []
+  const processedNameSet = new Set<string>()
 
   svgFiles.forEach(svgFilePath => {
     const svgContent = readFileSync(svgFilePath)
@@ -144,10 +236,11 @@ function buildComponents(): void {
     const componentName = toComponentName(svgFileName)
 
     // Check for duplicate component names
-    if (processedNames.includes(svgFileName)) {
+    if (processedNameSet.has(svgFileName)) {
         console.warn(`⚠️  Duplicate icon name found: ${svgFileName}. Skipping ${svgFilePath}`)
         return
     }
+    processedNameSet.add(svgFileName)
     processedNames.push(svgFileName)
 
     const vue3Component = generateVue3Component(vue3Template, svgFileName, svgContent)
@@ -169,11 +262,19 @@ function buildComponents(): void {
   const typesContent = generateTypesFile(processedNames)
   writeFileSync(TYPES_FILE, typesContent)
 
+  const iconsJsonContent = JSON.stringify(processedNames.map(name => toComponentName(name)), null, 2)
+  writeFileSync(ICONS_JSON_FILE, iconsJsonContent)
+
+  const webTypesContent = generateWebTypes(processedNames)
+  writeFileSync(WEB_TYPES_FILE, webTypesContent)
+
   console.log(`\n✨ Successfully generated ${processedNames.length} components`)
   console.log(`📦 Vue3 components: ${VUE3_OUTPUT_DIR}`)
   console.log(`📦 UniApp components: ${UNIAPP_OUTPUT_DIR}`)
   console.log(`📄 Index file: ${INDEX_FILE}`)
   console.log(`📄 Types file: ${TYPES_FILE}`)
+  console.log(`📄 Icons JSON: ${ICONS_JSON_FILE}`)
+  console.log(`📄 Web Types: ${WEB_TYPES_FILE}`)
 }
 
 buildComponents()

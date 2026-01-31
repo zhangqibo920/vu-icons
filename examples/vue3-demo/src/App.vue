@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, shallowRef } from 'vue'
 import * as AllIcons from 'vu-icons'
+import { VuSearch, VuX, VuChevronLeft, VuChevronRight } from 'vu-icons'
 
 // Convert icons object to array
 const iconsList = Object.entries(AllIcons).map(([name, component]) => ({
@@ -90,10 +91,10 @@ const prevPage = () => {
         </div>
         <div class="pagination-controls">
           <button @click="prevPage" :disabled="currentPage === 1" class="nav-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <VuChevronLeft :size="20" />
           </button>
           <button @click="nextPage" :disabled="currentPage === totalPages" class="nav-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <VuChevronRight :size="20" />
           </button>
         </div>
       </div>
