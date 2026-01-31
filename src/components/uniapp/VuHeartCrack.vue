@@ -3,9 +3,25 @@ const name = 'VuHeartCrack'
 import { computed } from 'vue'
 
 interface Props {
+  /**
+   * Icon size
+   * @default 24
+   */
   size?: number | string
+  /**
+   * Icon color
+   * @default 'currentColor'
+   */
   color?: string
+  /**
+   * Custom class name
+   * @default ''
+   */
   className?: string
+  /**
+   * Whether to spin the icon
+   * @default false
+   */
   spin?: boolean
 }
 
@@ -16,33 +32,84 @@ const props = withDefaults(defineProps<Props>(), {
   spin: false
 })
 
-const style = computed(() => ({
-  width: typeof props.size === 'number' ? `${props.size}px` : props.size,
-  height: typeof props.size === 'number' ? `${props.size}px` : props.size,
-  color: props.color,
-  ...(props.spin ? { animation: 'vu-icon-spin 1s linear infinite' } : {})
-}))
+const isNumber = (val: number | string) => typeof val === 'number'
+
+const iconStyle = computed(() => {
+  const sizeVal = props.size
+  // Ensure size has units if it's a number-like string
+  const size = (typeof sizeVal === 'number' || !isNaN(Number(sizeVal))) 
+    ? `${sizeVal}px` 
+    : sizeVal
+    
+  return {
+    width: size,
+    height: size,
+    color: props.color
+  }
+})
+
+// For Non-H5 (Mini Program)
+const bgStyle = computed(() => {
+  const sizeVal = props.size
+  const size = (typeof sizeVal === 'number' || !isNaN(Number(sizeVal))) 
+    ? `${sizeVal}px` 
+    : sizeVal
+  
+  // Replace currentColor with black for mask usage
+  // The original SVG content has stroke='currentColor'
+  // We need to construct a valid SVG string for data URI
+  const spinNode = props.spin
+    ? `<animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite" />`
+    : ''
+    
+  // We use black color for the mask source to ensure opacity
+  const svgContent = `<path d="M12.409 5.824c-.702.792-1.15 1.496-1.415 2.166l2.153 2.156a.5.5 0 010 .707l-2.293 2.293a.5.5 0 000 .707L12 15"/><path d="M13.508 20.313a2 2 0 01-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5a5.5 5.5 0 019.591-3.677.6.6 0 00.818.001A5.5 5.5 0 0122 9.5c0 2.29-1.5 4-3 5.5z"/>`
+  
+  // Use encodeURIComponent for robust Data URI generation
+  const svg = `<svg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'>${spinNode}${svgContent}</svg>`
+  
+  const encodedSvg = encodeURIComponent(svg)
+    .replace(/'/g, '%27')
+    .replace(/"/g, '%22')
+
+  const dataUri = `url("data:image/svg+xml,${encodedSvg}")`
+  
+  return {
+    width: size,
+    height: size,
+    color: props.color, // Essential for currentColor to work in backgroundColor
+    backgroundColor: props.color,
+    maskImage: dataUri,
+    WebkitMaskImage: dataUri,
+    maskRepeat: 'no-repeat',
+    WebkitMaskRepeat: 'no-repeat',
+    maskSize: '100% 100%',
+    WebkitMaskSize: '100% 100%'
+  }
+})
 </script>
 
 <template>
   <!-- #ifdef H5 -->
-  <svg :class="className" :style="style" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <svg 
+    :class="className" 
+    :style="iconStyle" 
+    :width="iconStyle.width" 
+    :height="iconStyle.height" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <animateTransform v-if="spin" attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite" />
     <path d="M12.409 5.824c-.702.792-1.15 1.496-1.415 2.166l2.153 2.156a.5.5 0 010 .707l-2.293 2.293a.5.5 0 000 .707L12 15"/><path d="M13.508 20.313a2 2 0 01-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5a5.5 5.5 0 019.591-3.677.6.6 0 00.818.001A5.5 5.5 0 0122 9.5c0 2.29-1.5 4-3 5.5z"/>
   </svg>
   <!-- #endif -->
 
   <!-- #ifndef H5 -->
-  <rich-text :class="className" :style="style" :nodes="`<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg' style='width:${style.width};height:${style.height};color:${style.color}'><!-- SVG_PATH_CONTENT --></svg>`" />
+  <view :class="className" :style="bgStyle" />
   <!-- #endif -->
 </template>
-
-<style>
-@keyframes vu-icon-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>
