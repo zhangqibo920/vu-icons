@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, markRaw } from 'vue'
 import * as AllIcons from 'vu-icons/uniapp'
+import { VuSearch, VuX, VuChevronLeft, VuChevronRight } from 'vu-icons/uniapp'
 
 // Convert icons object to array
 const iconsList = Object.entries(AllIcons).map(([name, component]) => ({
@@ -67,6 +68,7 @@ const clearSearch = () => {
     <view class="header-wrapper">
       <view class="search-box">
         <view class="search-input-wrapper">
+          <VuSearch :size="18" color="#999" style="margin-left: 12px" />
           <input 
             class="search-input"
             v-model="searchText" 
@@ -74,7 +76,7 @@ const clearSearch = () => {
             @input="currentPage = 1"
           />
           <view v-if="searchText" class="clear-btn" @click="clearSearch">
-            <text class="clear-icon">×</text>
+            <VuX :size="16" color="#999" />
           </view>
         </view>
       </view>
@@ -88,7 +90,6 @@ const clearSearch = () => {
     
     <!-- Main Content -->
     <view class="content-wrapper">
-      <!-- #ifdef H5 -->
       <view class="icon-grid">
         <view 
           v-for="icon in currentIcons" 
@@ -103,14 +104,6 @@ const clearSearch = () => {
           <text class="icon-name">{{ icon.name }}</text>
         </view>
       </view>
-      <!-- #endif -->
-
-      <!-- #ifndef H5 -->
-      <view class="no-support-tip">
-        <text class="tip-title">预览仅支持 H5 环境</text>
-        <text class="tip-desc">小程序端请按需引入组件使用</text>
-      </view>
-      <!-- #endif -->
       
       <!-- Empty State -->
       <view v-if="filteredIcons.length === 0" class="empty-state">
@@ -124,14 +117,18 @@ const clearSearch = () => {
           :class="{ disabled: currentPage === 1 }"
           @click="prevPage" 
           :disabled="currentPage === 1"
-        >上一页</button>
+        >
+          <VuChevronLeft :size="20" />
+        </button>
         <text class="page-number">{{ currentPage }} / {{ totalPages }}</text>
         <button 
           class="nav-btn" 
           :class="{ disabled: currentPage === totalPages }"
           @click="nextPage" 
           :disabled="currentPage === totalPages"
-        >下一页</button>
+        >
+          <VuChevronRight :size="20" />
+        </button>
       </view>
     </view>
   </view>
@@ -144,7 +141,6 @@ page {
 }
 
 .app-container {
-  min-height: 100vh;
   padding-top: 110px; /* Header height */
   padding-bottom: 30px;
 }
@@ -152,7 +148,7 @@ page {
 /* Header */
 .header-wrapper {
   position: fixed;
-  top: 0;
+  top: 80rpx;
   left: 0;
   right: 0;
   z-index: 100;

@@ -5,6 +5,29 @@
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "web-types": "dist/web-types.json",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./uniapp": {
+      "types": "./dist/uniapp/index.d.ts",
+      "import": "./dist/uniapp/index.js",
+      "require": "./dist/uniapp/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "uniapp": [
+        "dist/uniapp/index.d.ts"
+      ],
+      "*": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "files": [
     "dist"
@@ -12,8 +35,13 @@
   "scripts": {
     "optimize:svg": "gulp optimizeSvg",
     "build:components": "tsx src/build-components.ts",
-    "build": "npm run optimize:svg && npm run build:components && gulp build && gulp copyTypes && gulp copyUniApp && gulp buildNpm",
+    "build": "gulp optimizeSvg && npm run build:components && gulp build copyTypes copyUniApp buildUniAppIndex buildNpm",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly",
+    "lint": "vue-tsc --noEmit",
+    "setup:demos": "cd examples/vue3-demo && npm install && cd ../uniapp-demo && npm install",
+    "dev:vue3": "cd examples/vue3-demo && npm run dev",
+    "dev:uniapp": "cd examples/uniapp-demo && npm run dev",
+    "test": "npm run build && tsx scripts/verify-build.ts",
     "prepublishOnly": "npm run build",
     "publish:check": "node scripts/publish.js",
     "publish": "npm run build && npm publish"
@@ -43,6 +71,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
+    "@types/node": "^20.14.10",
     "@vitejs/plugin-vue": "^5.0.0",
     "@vue/compiler-sfc": "^3.4.0",
     "@vue/tsconfig": "^0.5.0",
@@ -51,11 +80,11 @@
     "rollup": "^4.0.0",
     "svgo": "^3.0.0",
     "tsx": "^4.0.0",
-    "typescript": "^5.0.0",
+    "typescript": "~5.3.0",
     "vue": "^3.4.0",
-    "vue-tsc": "^1.8.0"
+    "vue-tsc": "^1.8.27"
   },
   "dependencies": {
-    "vue": "^3.4.0"
+    "glob": "^13.0.0"
   }
 }

@@ -15,53 +15,39 @@ function clean(done) {
 }
 
 function optimizeSvg() {
+  if (fs.existsSync(OPTIMIZED_DIR)) {
+    fs.rmSync(OPTIMIZED_DIR, { recursive: true, force: true })
+  }
   return gulp
-    .src(`${SRC_DIR}/**/*.svg`)
+    .src([`${SRC_DIR}/**/*.svg`, `!${OPTIMIZED_DIR}/**/*.svg`])
     .pipe(
       svgo({
         plugins: [
-          {
-            name: 'preset-default',
-            params: {
-              overrides: {
-                removeViewBox: false,
-                removeDimensions: true,
-                removeStyleElement: true,
-                removeScriptElement: true,
-                removeTitle: true,
-                removeDesc: true,
-                removeUselessDefs: true,
-                removeEditorsNSData: true,
-                removeEmptyAttrs: true,
-                removeHiddenElems: true,
-                removeEmptyText: true,
-                convertColors: true,
-                convertPathData: true,
-                mergePaths: true,
-                removeUnusedNS: true,
-                sortAttrs: true,
-                removeEmptyContainers: true,
-                cleanupIds: true,
-                minifyStyles: true,
-                convertTransform: true,
-                removeUnknownsAndDefaults: true,
-                removeNonInheritableGroupAttrs: true,
-                removeEmptyText: true,
-                convertShapeToPath: true,
-                convertEllipseToCircle: true,
-                moveElemsAttrsToGroup: true,
-                moveGroupAttrsToElems: true,
-                collapseGroups: true,
-                convertPathData: true,
-                convertTransform: true,
-                mergePaths: true,
-                removeUnusedNS: true,
-                sortDefsChildren: true,
-                removeTitle: true,
-                removeDesc: true,
-              },
-            },
-          },
+          { removeViewBox: false },
+          { removeDimensions: true },
+          { removeStyleElement: true },
+          { removeScriptElement: true },
+          { removeTitle: true },
+          { removeDesc: true },
+          { removeUselessDefs: true },
+          { removeEmptyAttrs: true },
+          { removeHiddenElems: true },
+          { removeEmptyText: true },
+          { convertColors: true },
+          { convertPathData: true },
+          { mergePaths: true },
+          { removeUnusedNS: true },
+          { sortAttrs: true },
+          { removeEmptyContainers: true },
+          { cleanupIds: true },
+          { minifyStyles: true },
+          { convertTransform: true },
+          { convertShapeToPath: true },
+          { convertEllipseToCircle: true },
+          { moveElemsAttrsToGroup: true },
+          { moveGroupAttrsToElems: true },
+          { collapseGroups: true },
+          { sortDefsChildren: true },
         ],
       })
     )
@@ -76,14 +62,27 @@ function build() {
 
 function copyTypes() {
   return gulp
-    .src('src/index.d.ts')
+    .src(['src/index.d.ts', 'src/web-types.json', 'src/icons.json'])
     .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/uniapp'))
 }
 
 function copyUniApp() {
   return gulp
     .src('src/components/uniapp/*')
     .pipe(gulp.dest('dist/uniapp'))
+}
+
+function buildUniAppIndex(done) {
+  const sourceFile = path.join(__dirname, 'src/components/uniapp/index.ts')
+  const targetDir = path.join(__dirname, 'dist/uniapp')
+  const targetFile = path.join(targetDir, 'index.js')
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true })
+  }
+  const content = fs.readFileSync(sourceFile, 'utf-8')
+  fs.writeFileSync(targetFile, content, 'utf-8')
+  done()
 }
 
 async function buildNpm() {
@@ -119,6 +118,7 @@ exports.optimizeSvg = optimizeSvg
 exports.build = build
 exports.copyTypes = copyTypes
 exports.copyUniApp = copyUniApp
+exports.buildUniAppIndex = buildUniAppIndex
 exports.clean = clean
 exports.buildNpm = buildNpm
-exports.default = gulp.series(exports.clean, exports.optimizeSvg, exports.build, exports.copyTypes, exports.copyUniApp, exports.buildNpm)
+exports.default = gulp.series(exports.clean, exports.optimizeSvg, exports.build, exports.copyTypes, exports.copyUniApp, exports.buildUniAppIndex, exports.buildNpm)

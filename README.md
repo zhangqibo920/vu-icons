@@ -29,6 +29,7 @@ Vue3 & UniApp SVG Icon Library, supports Tree Shaking for on-demand imports, bui
 - 📝 **TypeScript** - Complete type declarations, excellent developer experience
 - 🚀 **Automated Build** - One-click component generation, quickly add new icons
 - 📱 **Responsive Design** - Supports both number and string sizes
+- 🔧 **Mini Program Support** - Fully compatible with WeChat Mini Programs (auto fallback to background-image)
 
 ## 📦 Installation
 
@@ -84,6 +85,20 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
 | color | string | 'currentColor' | Icon color, supports any valid CSS color value |
 | className | string | '' | Custom class name |
 | spin | boolean | false | Whether to spin the icon, useful for loading states |
+
+## 💡 IDE Support
+
+VU-Icons provides enhanced support for modern IDEs (like WebStorm, VS Code).
+
+- **Autocompletion**: Includes `web-types.json` for better component tag and prop suggestions.
+- **Icons List**: A JSON file containing all icon names is available at `vu-icons/dist/icons.json` for dynamic usage.
+
+```javascript
+// Example: Importing icon list
+import icons from 'vu-icons/dist/icons.json'
+
+console.log(icons) // ['VuAdd', 'VuUser', ...]
+```
 
 ## 🎨 Usage Examples
 
@@ -206,9 +221,23 @@ vu-icons/
 # Install dependencies
 npm install
 
+# Setup demos (install dependencies for examples)
+npm run setup:demos
+
+# Generate components (required before running demos)
+npm run build:components
+
+# Run Vue3 Demo
+npm run dev:vue3
+
+# Run UniApp Demo
+npm run dev:uniapp
+
 # Build project
 npm run build
 
+# Lint check
+npm run lint
 ```
 
 ## 📝 Changelog
