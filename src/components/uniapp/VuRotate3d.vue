@@ -54,38 +54,48 @@ const bgStyle = computed(() => {
   const size = (typeof sizeVal === 'number' || !isNaN(Number(sizeVal))) 
     ? `${sizeVal}px` 
     : sizeVal
+    
+  return {
+    width: size,
+    height: size
+  }
+})
+
+// 兼容小程序的 base64 编码函数
+function base64Encode(str: string): string {
+  // 小程序环境使用 uni.arrayBufferToBase64
+  // #ifdef MP
+  const arrayBuffer = new Uint8Array(str.split('').map(c => c.charCodeAt(0)))
+  return uni.arrayBufferToBase64(arrayBuffer)
+  // #endif
   
-  // Replace currentColor with black for mask usage
-  // The original SVG content has stroke='currentColor'
-  // We need to construct a valid SVG string for data URI
+  // H5 环境使用 btoa
+  // #ifdef H5
+  return btoa(unescape(encodeURIComponent(str)))
+  // #endif
+  
+  // 兜底方案
+  // #ifndef MP || H5
+  try {
+    const arrayBuffer = new Uint8Array(str.split('').map(c => c.charCodeAt(0)))
+    return uni.arrayBufferToBase64(arrayBuffer)
+  } catch (e) {
+    return btoa(unescape(encodeURIComponent(str)))
+  }
+  // #endif
+}
+
+const svgDataUri = computed(() => {
   const spinNode = props.spin
     ? `<animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite" />`
     : ''
     
-  // We use black color for the mask source to ensure opacity
   const svgContent = `<path d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10q.514-.002 1-.2m2.194-8.093l3.814 1.86-1.86 3.814"/><path d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"/>`
   
-  // Use encodeURIComponent for robust Data URI generation
-  const svg = `<svg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'>${spinNode}${svgContent}</svg>`
+  const svg = `<svg viewBox='0 0 24 24' fill='none' stroke='${props.color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg' style='width:100%;height:100%;'>${spinNode}${svgContent}</svg>`
   
-  const encodedSvg = encodeURIComponent(svg)
-    .replace(/'/g, '%27')
-    .replace(/"/g, '%22')
-
-  const dataUri = `url("data:image/svg+xml,${encodedSvg}")`
-  
-  return {
-    width: size,
-    height: size,
-    color: props.color, // Essential for currentColor to work in backgroundColor
-    backgroundColor: props.color,
-    maskImage: dataUri,
-    WebkitMaskImage: dataUri,
-    maskRepeat: 'no-repeat',
-    WebkitMaskRepeat: 'no-repeat',
-    maskSize: '100% 100%',
-    WebkitMaskSize: '100% 100%'
-  }
+  const base64Svg = base64Encode(svg)
+  return `data:image/svg+xml;base64,${base64Svg}`
 })
 </script>
 
@@ -110,6 +120,6 @@ const bgStyle = computed(() => {
   <!-- #endif -->
 
   <!-- #ifndef H5 -->
-  <view :class="className" :style="bgStyle" />
+  <image :class="className" :style="bgStyle" :src="svgDataUri" mode="aspectFit" />
   <!-- #endif -->
 </template>

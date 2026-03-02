@@ -28,7 +28,23 @@ function readFileSync(filePath: string): string {
 }
 
 function writeFileSync(filePath: string, content: string): void {
-  fs.writeFileSync(filePath, content, 'utf-8')
+  let retries = 3
+  while (retries > 0) {
+    try {
+      fs.writeFileSync(filePath, content, 'utf-8')
+      return
+    } catch (error: any) {
+      if (error.code === 'EPERM' || error.code === 'EACCES') {
+        retries--
+        if (retries > 0) {
+          const waitTime = 500
+          Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, waitTime)
+          continue
+        }
+      }
+      throw error
+    }
+  }
 }
 
 function ensureDir(dirPath: string): void {

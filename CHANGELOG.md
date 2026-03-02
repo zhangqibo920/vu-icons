@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2026-03-02
+
+### Fixed
+- 修复UniApp图标在微信小程序中不显示的问题
+- 使用Base64编码的SVG data URI替代mask-image方案
+- 使用`<image>`标签替代`<rich-text>`组件渲染SVG
+
 ## [1.0.0] - 2024-01-24
 
 ### Added
