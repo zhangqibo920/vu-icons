@@ -14,7 +14,7 @@
 
 Vue3 & UniApp SVG 图标组件库，支持 Tree Shaking 按需引入，内置完整 TypeScript 类型声明。
 
-[English](./README.en-US.md) | [简体中文](./README.zh-CN.md)
+[English](./README.md) | [简体中文](./README.zh-CN.md)
 
 </div>
 
@@ -24,12 +24,12 @@ Vue3 & UniApp SVG 图标组件库，支持 Tree Shaking 按需引入，内置完
 
 - 🎨 **双框架支持** - 同时支持 Vue3 和 UniApp
 - 📦 **按需引入** - 支持 Tree Shaking 优化，只打包使用的图标
-- 🎯 **内联 SVG** - 性能优异，无额外请求
+- 🎯 **字体图标** - 使用 iconfont 方案，体积小，加载快
 - 🌈 **高度可定制** - 支持自定义尺寸和颜色
 - 📝 **TypeScript** - 完整的类型声明，开发体验优秀
 - 🚀 **自动化构建** - 一键生成组件，快速添加新图标
 - 📱 **响应式设计** - 支持数字和字符串尺寸
-- 🔧 **小程序兼容** - 完美支持微信小程序等非 H5 环境（自动降级为背景图方案）
+- 🔧 **小程序兼容** - 完美支持微信小程序等非 H5 环境（使用字体图标方案）
 
 ## 📦 安装
 
@@ -76,6 +76,16 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
   </view>
 </template>
 ```
+
+> **微信小程序配置**：使用 UniApp 开发微信小程序时，需要额外配置字体文件：
+>
+> 1. 将 `node_modules/vu-icons/dist/font/` 目录下的 `vu-icons.woff2` 和 `vu-icons.css` 复制到项目的 `static/fonts/` 目录
+> 2. 在 `App.vue` 中导入样式：
+> ```vue
+> <style>
+> @import './static/fonts/vu-icons.css';
+> </style>
+> ```
 
 ## 📖 Props
 

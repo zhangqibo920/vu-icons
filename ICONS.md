@@ -1,49 +1,68 @@
 # 图标列表
 
-## 所有可用图标
+## 概览
 
-| 图标 | 组件名 | SVG文件 | 说明 |
-|------|---------|----------|------|
-| 👤 | VuUser | user.svg | 用户头像 |
-| 🔍 | VuSearch | search.svg | 搜索 |
-| ⭐ | VuStar | star.svg | 星星/收藏 |
-| 🏠 | VuHome | home.svg | 首页 |
-| ⚙️ | VuSettings | settings.svg | 设置 |
-| 💬 | VuMessage | message.svg | 消息/评论 |
-| ℹ️ | VuInfo | info.svg | 信息提示 |
-| ❌ | VuClose | close.svg | 关闭/删除 |
-| ➕ | VuAdd | add.svg | 添加/新增 |
-| ✏️ | VuEdit | edit.svg | 编辑 |
-| ❤️ | VuFavorite | favorite.svg | 喜欢/红心 |
-| ⬅️ | VuArrowLeft | arrow-left.svg | 左箭头 |
-| ➡️ | VuArrowRight | arrow-right.svg | 右箭头 |
-| ⬆️ | VuArrowUp | arrow-up.svg | 上箭头 |
-| ⬇️ | VuArrowDown | arrow-down.svg | 下箭头 |
-| ✅ | VuCheck | check.svg | 对勾/确认 |
-| 🗑️ | VuDelete | delete.svg | 删除/垃圾桶 |
-| ⬇️ | VuDownload | download.svg | 下载 |
-| ⬆️ | VuUpload | upload.svg | 上传 |
-| 🔗 | VuShare | share.svg | 分享 |
-| 👍 | VuLike | like.svg | 点赞 |
-| 👎 | VuDislike | dislike.svg | 踩 |
-| 🔍 | VuFilter | filter.svg | 筛选 |
-| 📊 | VuSort | sort.svg | 排序 |
-| 🔄 | VuRefresh | refresh.svg | 刷新 |
-| 🔒 | VuLock | lock.svg | 锁定 |
-| 🔓 | VuUnlock | unlock.svg | 解锁 |
-| 🔔 | VuBell | bell.svg | 通知 |
-| 📷 | VuCamera | camera.svg | 相机 |
-| 🖼️ | VuImage | image.svg | 图片 |
-| 🎥 | VuVideo | video.svg | 视频 |
-| 🎵 | VuMusic | music.svg | 音乐 |
-| 📄 | VuFile | file.svg | 文件 |
-| 📁 | VuFolder | folder.svg | 文件夹 |
-| 🔗 | VuLink | link.svg | 链接 |
-| 📋 | VuCopy | copy.svg | 复制 |
-| 📌 | VuPaste | paste.svg | 粘贴 |
-| ✂️ | VuCut | cut.svg | 剪切 |
-| ↩️ | VuUndo | undo.svg | 撤销 |
-| ↪️ | VuRedo | redo.svg | 重做 |
+vu-icons 包含 **1800+** 个图标组件，涵盖以下分类：
+
+| 分类 | 说明 | 图标来源 |
+|------|------|----------|
+| lucide | Lucide 图标库 | 1600+ 图标 |
+| action | 操作类图标 | 30+ 图标 |
+| arrows | 箭头类图标 | 10+ 图标 |
+| chart | 图表类图标 | 10+ 图标 |
+| communication | 通讯类图标 | 10+ 图标 |
+| device | 设备类图标 | 10+ 图标 |
+| editor | 编辑器类图标 | 10+ 图标 |
+| file | 文件类图标 | 10+ 图标 |
+| finance | 金融类图标 | 10+ 图标 |
+| location | 位置类图标 | 10+ 图标 |
+| media | 媒体类图标 | 10+ 图标 |
+| others | 其他图标 | 30+ 图标 |
+| system | 系统类图标 | 10+ 图标 |
+| weather | 天气类图标 | 10+ 图标 |
+
+## 常用图标示例
+
+| 图标 | 组件名 | 说明 |
+|------|---------|------|
+| 👤 | VuUser | 用户头像 |
+| 🔍 | VuSearch | 搜索 |
+| ⭐ | VuStar | 星星/收藏 |
+| 🏠 | VuHome | 首页 |
+| ⚙️ | VuSettings | 设置 |
+| 💬 | VuMessage | 消息/评论 |
+| ℹ️ | VuInfo | 信息提示 |
+| ❌ | VuClose | 关闭/删除 |
+| ➕ | VuAdd | 添加/新增 |
+| ✏️ | VuEdit | 编辑 |
+| ❤️ | VuFavorite | 喜欢/红心 |
+| ⬅️ | VuArrowLeft | 左箭头 |
+| ➡️ | VuArrowRight | 右箭头 |
+| ⬆️ | VuArrowUp | 上箭头 |
+| ⬇️ | VuArrowDown | 下箭头 |
+| ✅ | VuCheck | 对勾/确认 |
+| 🗑️ | VuDelete | 删除/垃圾桶 |
+| ⬇️ | VuDownload | 下载 |
+| ⬆️ | VuUpload | 上传 |
+| 🔗 | VuShare | 分享 |
+| 👍 | VuLike | 点赞 |
+| 👎 | VuDislike | 踩 |
+| 🔍 | VuFilter | 筛选 |
+| 📊 | VuSort | 排序 |
+| 🔄 | VuRefresh | 刷新 |
+| 🔒 | VuLock | 锁定 |
+| 🔓 | VuUnlock | 解锁 |
+| 🔔 | VuBell | 通知 |
+| 📷 | VuCamera | 相机 |
+| 🖼️ | VuImage | 图片 |
+
+## 查看所有图标
+
+要查看所有可用图标，可以：
+
+1. 查看 `dist/icons.json` 文件，包含所有组件名
+2. 访问官网 https://vuicons.qiboz.top/ 浏览完整图标列表
+3. 在 IDE 中使用 `web-types.json` 获得自动补全提示
 
 ## 使用示例
 

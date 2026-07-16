@@ -1,6 +1,7 @@
 # 源代码
 src/
 examples/
+scripts/
 
 # 构建配置
 gulpfile.js
@@ -45,4 +46,13 @@ coverage/
 # 临时文件
 *.tmp
 .temp/
+
+# 测试生成的文件
+test.ttf
+test.woff2
+debug-font.svg
+
+# 其他文档
+使用文档.md
+.mimocode/
 

@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.6] - 2026-07-13
+
+### Changed
+- 重构为 iconfont（字体图标）方案，替代内联SVG
+- 使用 svgicons2svgfont + svg2ttf + wawoff2 生成字体文件
+- Vue3 基础组件使用 `<i>` 标签 + CSS `::before` 伪元素
+- UniApp 基础组件使用 `<text>` 标签 + CSS 类名
+- 字体文件 vu-icons.woff2 约85KB（1821个图标）
+
+### Fixed
+- 修复 SVGO 路径数据损坏问题（使用原始SVG生成字体）
+- 修复 UniApp 在微信小程序中图标不显示的问题
+- 修复 ttf2woff2 在 Windows 上的 E_CONVERT_ERROR
+
+## [1.3.5] - 2026-07-10
+
+### Changed
+- 优化 SVG 图标生成流程
+- 添加字体生成验证脚本
+
+### Fixed
+- 修复图标去重逻辑
+- 修复字体 CSS 生成格式
+
 ## [1.3.4] - 2026-03-02
 
 ### Fixed

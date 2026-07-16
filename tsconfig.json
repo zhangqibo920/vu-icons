@@ -4,9 +4,6 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "declaration": true,
-    "declarationDir": "./dist/types",
-    "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -17,5 +14,5 @@
     "types": ["node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "examples", "src/components/*Template.ts"]
+  "exclude": ["node_modules", "dist", "examples"]
 }

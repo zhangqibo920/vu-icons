@@ -24,12 +24,12 @@ Vue3 & UniApp SVG Icon Library, supports Tree Shaking for on-demand imports, bui
 
 - 🎨 **Dual Framework Support** - Supports both Vue3 and UniApp
 - 📦 **On-demand Import** - Supports Tree Shaking optimization, only bundles used icons
-- 🎯 **Inline SVG** - Excellent performance, no extra requests
+- 🎯 **Icon Font** - Uses iconfont approach, small size, fast loading
 - 🌈 **Highly Customizable** - Supports custom size and color
 - 📝 **TypeScript** - Complete type declarations, excellent developer experience
 - 🚀 **Automated Build** - One-click component generation, quickly add new icons
 - 📱 **Responsive Design** - Supports both number and string sizes
-- 🔧 **Mini Program Support** - Fully compatible with WeChat Mini Programs (auto fallback to background-image)
+- 🔧 **Mini Program Support** - Fully compatible with WeChat Mini Programs (uses icon font approach)
 
 ## 📦 Installation
 
@@ -76,6 +76,16 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
   </view>
 </template>
 ```
+
+> **WeChat Mini Program Setup**: When using UniApp for WeChat Mini Programs, additional font configuration is required:
+>
+> 1. Copy `vu-icons.woff2` and `vu-icons.css` from `node_modules/vu-icons/dist/font/` to your project's `static/fonts/` directory
+> 2. Import the CSS in `App.vue`:
+> ```vue
+> <style>
+> @import './static/fonts/vu-icons.css';
+> </style>
+> ```
 
 ## 📖 Props
 
