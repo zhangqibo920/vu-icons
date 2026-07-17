@@ -68,50 +68,67 @@ vu-icons 包含 **1800+** 个图标组件，涵盖以下分类：
 
 ### Vue3 项目
 
+推荐使用 VuIcon 核心组件：
+
 ```vue
 <script setup lang="ts">
-import { 
-  VuUser, 
-  VuSearch, 
-  VuStar,
-  VuHome,
-  VuSettings,
-  VuMessage,
-  VuInfo,
-  VuClose,
-  VuAdd,
-  VuEdit,
-  VuFavorite,
-  VuArrowLeft,
-  VuArrowRight,
-  VuArrowUp,
-  VuArrowDown,
-  VuCheck,
-  VuDelete,
-  VuDownload,
-  VuUpload,
-  VuShare,
-  VuLike,
-  VuDislike,
-  VuFilter,
-  VuSort,
-  VuRefresh,
-  VuLock,
-  VuUnlock,
-  VuBell,
-  VuCamera,
-  VuImage,
-  VuVideo,
-  VuMusic,
-  VuFile,
-  VuFolder,
-  VuLink,
-  VuCopy,
-  VuPaste,
-  VuCut,
-  VuUndo,
-  VuRedo
-} from 'vu-icons'
+import VuIcon from 'vu-icons/icon'
+</script>
+
+<template>
+  <div>
+    <!-- 基础用法 -->
+    <VuIcon name="user" :size="24" color="#333" />
+    <VuIcon name="search" :size="24" color="#333" />
+    <VuIcon name="star" :size="24" color="#333" />
+    <VuIcon name="home" :size="24" color="#333" />
+    <VuIcon name="settings" :size="24" color="#333" />
+
+    <!-- 更多图标 -->
+    <VuIcon name="message" :size="24" color="#333" />
+    <VuIcon name="info" :size="24" color="#333" />
+    <VuIcon name="close" :size="24" color="#333" />
+    <VuIcon name="add" :size="24" color="#333" />
+    <VuIcon name="edit" :size="24" color="#333" />
+    <VuIcon name="favorite" :size="24" color="#333" />
+    <VuIcon name="arrow-left" :size="24" color="#333" />
+    <VuIcon name="arrow-right" :size="24" color="#333" />
+    <VuIcon name="arrow-up" :size="24" color="#333" />
+    <VuIcon name="arrow-down" :size="24" color="#333" />
+    <VuIcon name="check" :size="24" color="#333" />
+    <VuIcon name="delete" :size="24" color="#333" />
+    <VuIcon name="download" :size="24" color="#333" />
+    <VuIcon name="upload" :size="24" color="#333" />
+    <VuIcon name="share" :size="24" color="#333" />
+    <VuIcon name="like" :size="24" color="#333" />
+    <VuIcon name="dislike" :size="24" color="#333" />
+    <VuIcon name="filter" :size="24" color="#333" />
+    <VuIcon name="sort" :size="24" color="#333" />
+    <VuIcon name="refresh" :size="24" color="#333" />
+    <VuIcon name="lock" :size="24" color="#333" />
+    <VuIcon name="unlock" :size="24" color="#333" />
+    <VuIcon name="bell" :size="24" color="#333" />
+    <VuIcon name="camera" :size="24" color="#333" />
+    <VuIcon name="image" :size="24" color="#333" />
+    <VuIcon name="video" :size="24" color="#333" />
+    <VuIcon name="music" :size="24" color="#333" />
+    <VuIcon name="file" :size="24" color="#333" />
+    <VuIcon name="folder" :size="24" color="#333" />
+    <VuIcon name="link" :size="24" color="#333" />
+    <VuIcon name="copy" :size="24" color="#333" />
+    <VuIcon name="paste" :size="24" color="#333" />
+    <VuIcon name="cut" :size="24" color="#333" />
+    <VuIcon name="undo" :size="24" color="#333" />
+    <VuIcon name="redo" :size="24" color="#333" />
+  </div>
+</template>
+```
+
+也支持按需引入包装组件：
+
+```vue
+<script setup lang="ts">
+import { VuUser, VuSearch, VuStar, VuHome } from 'vu-icons'
 </script>
 
 <template>
@@ -120,139 +137,79 @@ import {
     <VuSearch :size="24" color="#333" />
     <VuStar :size="24" color="#333" />
     <VuHome :size="24" color="#333" />
-    <VuSettings :size="24" color="#333" />
-    <VuMessage :size="24" color="#333" />
-    <VuInfo :size="24" color="#333" />
-    <VuClose :size="24" color="#333" />
-    <VuAdd :size="24" color="#333" />
-    <VuEdit :size="24" color="#333" />
-    <VuFavorite :size="24" color="#333" />
-    <VuArrowLeft :size="24" color="#333" />
-    <VuArrowRight :size="24" color="#333" />
-    <VuArrowUp :size="24" color="#333" />
-    <VuArrowDown :size="24" color="#333" />
-    <VuCheck :size="24" color="#333" />
-    <VuDelete :size="24" color="#333" />
-    <VuDownload :size="24" color="#333" />
-    <VuUpload :size="24" color="#333" />
-    <VuShare :size="24" color="#333" />
-    <VuLike :size="24" color="#333" />
-    <VuDislike :size="24" color="#333" />
-    <VuFilter :size="24" color="#333" />
-    <VuSort :size="24" color="#333" />
-    <VuRefresh :size="24" color="#333" />
-    <VuLock :size="24" color="#333" />
-    <VuUnlock :size="24" color="#333" />
-    <VuBell :size="24" color="#333" />
-    <VuCamera :size="24" color="#333" />
-    <VuImage :size="24" color="#333" />
-    <VuVideo :size="24" color="#333" />
-    <VuMusic :size="24" color="#333" />
-    <VuFile :size="24" color="#333" />
-    <VuFolder :size="24" color="#333" />
-    <VuLink :size="24" color="#333" />
-    <VuCopy :size="24" color="#333" />
-    <VuPaste :size="24" color="#333" />
-    <VuCut :size="24" color="#333" />
-    <VuUndo :size="24" color="#333" />
-    <VuRedo :size="24" color="#333" />
   </div>
 </template>
 ```
 
 ### UniApp 项目
 
+> ⚠️ **重要**：在 UniApp 中必须直接导入 `.vue` 文件，不能使用包装组件。
+
 ```vue
-<script setup lang="ts">
-import { 
-  VuUser, 
-  VuSearch, 
-  VuStar,
-  VuHome,
-  VuSettings,
-  VuMessage,
-  VuInfo,
-  VuClose,
-  VuAdd,
-  VuEdit,
-  VuFavorite,
-  VuArrowLeft,
-  VuArrowRight,
-  VuArrowUp,
-  VuArrowDown,
-  VuCheck,
-  VuDelete,
-  VuDownload,
-  VuUpload,
-  VuShare,
-  VuLike,
-  VuDislike,
-  VuFilter,
-  VuSort,
-  VuRefresh,
-  VuLock,
-  VuUnlock,
-  VuBell,
-  VuCamera,
-  VuImage,
-  VuVideo,
-  VuMusic,
-  VuFile,
-  VuFolder,
-  VuLink,
-  VuCopy,
-  VuPaste,
-  VuCut,
-  VuUndo,
-  VuRedo
-} from 'vu-icons/uniapp'
+<script>
+// ✅ 正确：直接导入 .vue 文件
+import VuIcon from 'vu-icons/uniapp/icon'
+
+export default {
+  components: { VuIcon }
+}
 </script>
 
 <template>
   <view>
-    <VuUser :size="24" color="#333" />
-    <VuSearch :size="24" color="#333" />
-    <VuStar :size="24" color="#333" />
-    <VuHome :size="24" color="#333" />
-    <VuSettings :size="24" color="#333" />
-    <VuMessage :size="24" color="#333" />
-    <VuInfo :size="24" color="#333" />
-    <VuClose :size="24" color="#333" />
-    <VuAdd :size="24" color="#333" />
-    <VuEdit :size="24" color="#333" />
-    <VuFavorite :size="24" color="#333" />
-    <VuArrowLeft :size="24" color="#333" />
-    <VuArrowRight :size="24" color="#333" />
-    <VuArrowUp :size="24" color="#333" />
-    <VuArrowDown :size="24" color="#333" />
-    <VuCheck :size="24" color="#333" />
-    <VuDelete :size="24" color="#333" />
-    <VuDownload :size="24" color="#333" />
-    <VuUpload :size="24" color="#333" />
-    <VuShare :size="24" color="#333" />
-    <VuLike :size="24" color="#333" />
-    <VuDislike :size="24" color="#333" />
-    <VuFilter :size="24" color="#333" />
-    <VuSort :size="24" color="#333" />
-    <VuRefresh :size="24" color="#333" />
-    <VuLock :size="24" color="#333" />
-    <VuUnlock :size="24" color="#333" />
-    <VuBell :size="24" color="#333" />
-    <VuCamera :size="24" color="#333" />
-    <VuImage :size="24" color="#333" />
-    <VuVideo :size="24" color="#333" />
-    <VuMusic :size="24" color="#333" />
-    <VuFile :size="24" color="#333" />
-    <VuFolder :size="24" color="#333" />
-    <VuLink :size="24" color="#333" />
-    <VuCopy :size="24" color="#333" />
-    <VuPaste :size="24" color="#333" />
-    <VuCut :size="24" color="#333" />
-    <VuUndo :size="24" color="#333" />
-    <VuRedo :size="24" color="#333" />
+    <!-- 基础用法 -->
+    <VuIcon name="user" :size="24" color="#333" />
+    <VuIcon name="search" :size="24" color="#333" />
+    <VuIcon name="star" :size="24" color="#333" />
+    <VuIcon name="home" :size="24" color="#333" />
+    <VuIcon name="settings" :size="24" color="#333" />
+
+    <!-- 更多图标 -->
+    <VuIcon name="message" :size="24" color="#333" />
+    <VuIcon name="info" :size="24" color="#333" />
+    <VuIcon name="close" :size="24" color="#333" />
+    <VuIcon name="add" :size="24" color="#333" />
+    <VuIcon name="edit" :size="24" color="#333" />
+    <VuIcon name="favorite" :size="24" color="#333" />
+    <VuIcon name="arrow-left" :size="24" color="#333" />
+    <VuIcon name="arrow-right" :size="24" color="#333" />
+    <VuIcon name="arrow-up" :size="24" color="#333" />
+    <VuIcon name="arrow-down" :size="24" color="#333" />
+    <VuIcon name="check" :size="24" color="#333" />
+    <VuIcon name="delete" :size="24" color="#333" />
+    <VuIcon name="download" :size="24" color="#333" />
+    <VuIcon name="upload" :size="24" color="#333" />
+    <VuIcon name="share" :size="24" color="#333" />
+    <VuIcon name="like" :size="24" color="#333" />
+    <VuIcon name="dislike" :size="24" color="#333" />
+    <VuIcon name="filter" :size="24" color="#333" />
+    <VuIcon name="sort" :size="24" color="#333" />
+    <VuIcon name="refresh" :size="24" color="#333" />
+    <VuIcon name="lock" :size="24" color="#333" />
+    <VuIcon name="unlock" :size="24" color="#333" />
+    <VuIcon name="bell" :size="24" color="#333" />
+    <VuIcon name="camera" :size="24" color="#333" />
+    <VuIcon name="image" :size="24" color="#333" />
+    <VuIcon name="video" :size="24" color="#333" />
+    <VuIcon name="music" :size="24" color="#333" />
+    <VuIcon name="file" :size="24" color="#333" />
+    <VuIcon name="folder" :size="24" color="#333" />
+    <VuIcon name="link" :size="24" color="#333" />
+    <VuIcon name="copy" :size="24" color="#333" />
+    <VuIcon name="paste" :size="24" color="#333" />
+    <VuIcon name="cut" :size="24" color="#333" />
+    <VuIcon name="undo" :size="24" color="#333" />
+    <VuIcon name="redo" :size="24" color="#333" />
   </view>
 </template>
 ```
+
+> ❌ **错误用法**：以下方式在 UniApp 中不支持（微信小程序编译限制）
+> ```vue
+> <script>
+> import { VuUser, VuSearch } from 'vu-icons/uniapp'  // ❌ 不能这样导入
+> </script>
+> ```
 
 ## 添加新图标
 
@@ -267,13 +224,30 @@ import {
    ```
 
 3. **使用新图标**
+   
+   **Vue3 项目：**
    ```vue
    <script setup lang="ts">
-   import { VuNewIcon } from 'vu-icons'
+   import VuIcon from 'vu-icons/icon'
    </script>
-   
+
    <template>
-     <VuNewIcon :size="24" color="#333" />
+     <VuIcon name="new-icon" :size="24" color="#333" />
+   </template>
+   ```
+
+   **UniApp 项目：**
+   ```vue
+   <script>
+   import VuIcon from 'vu-icons/uniapp/icon'
+
+   export default {
+     components: { VuIcon }
+   }
+   </script>
+
+   <template>
+     <VuIcon name="new-icon" :size="24" color="#333" />
    </template>
    ```
 
