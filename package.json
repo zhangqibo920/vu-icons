@@ -1,6 +1,6 @@
 {
   "name": "vu-icons",
-  "version": "1.3.6",
+  "version": "1.5.1",
   "description": "Vue3 & UniApp 图标组件库，内置1800+图标，完整TypeScript类型声明",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -16,6 +16,9 @@
       "types": "./dist/uniapp/index.d.ts",
       "import": "./dist/uniapp/index.js"
     },
+    "./uniapp/icon": "./dist/uniapp/VuIcon.vue",
+    "./icon": "./dist/uniapp/VuIcon.vue",
+    "./dist/*": "./dist/*",
     "./font/*": "./dist/font/*"
   },
   "typesVersions": {

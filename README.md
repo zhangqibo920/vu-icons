@@ -24,12 +24,12 @@ Vue3 & UniApp SVG Icon Library, supports Tree Shaking for on-demand imports, bui
 
 - 🎨 **Dual Framework Support** - Supports both Vue3 and UniApp
 - 📦 **On-demand Import** - Supports Tree Shaking optimization, only bundles used icons
-- 🎯 **Icon Font** - Uses iconfont approach, small size, fast loading
+- 🎯 **CSS Mask + SVG** - Uses CSS Mask + URL-encoded SVG approach, no font files needed
 - 🌈 **Highly Customizable** - Supports custom size and color
 - 📝 **TypeScript** - Complete type declarations, excellent developer experience
 - 🚀 **Automated Build** - One-click component generation, quickly add new icons
 - 📱 **Responsive Design** - Supports both number and string sizes
-- 🔧 **Mini Program Support** - Fully compatible with WeChat Mini Programs (uses icon font approach)
+- 🔧 **Mini Program Support** - Fully compatible with WeChat Mini Programs (unified approach, no conditional compilation)
 
 ## 📦 Installation
 
@@ -47,6 +47,24 @@ yarn add vu-icons
 
 ### Vue3 Project
 
+Recommended: Use `VuIcon` core component with `name` prop:
+
+```vue
+<script setup lang="ts">
+import VuIcon from 'vu-icons/icon'
+</script>
+
+<template>
+  <div>
+    <VuIcon name="user" :size="24" color="#333" />
+    <VuIcon name="search" :size="32" color="#1890ff" />
+    <VuIcon name="star" :size="20" color="#faad14" />
+  </div>
+</template>
+```
+
+Also supports on-demand import of wrapper components:
+
 ```vue
 <script setup lang="ts">
 import { VuUser, VuSearch, VuStar } from 'vu-icons'
@@ -63,38 +81,112 @@ import { VuUser, VuSearch, VuStar } from 'vu-icons'
 
 ### UniApp Project
 
+In UniApp, you **must directly import the `VuIcon` core component**:
+
 ```vue
-<script setup lang="ts">
-import { VuUser, VuSearch, VuStar } from 'vu-icons/uniapp'
+<script>
+import VuIcon from 'vu-icons/uniapp/icon'
+
+export default {
+  components: { VuIcon }
+}
 </script>
 
 <template>
   <view>
-    <VuUser :size="24" color="#333" />
-    <VuSearch :size="32" color="#1890ff" />
-    <VuStar :size="20" color="#faad14" />
+    <VuIcon name="user" :size="24" color="#333" />
+    <VuIcon name="search" :size="32" color="#1890ff" />
+    <VuIcon name="star" :size="20" color="#faad14" />
   </view>
 </template>
 ```
 
-> **WeChat Mini Program Setup**: When using UniApp for WeChat Mini Programs, additional font configuration is required:
->
-> 1. Copy `vu-icons.woff2` and `vu-icons.css` from `node_modules/vu-icons/dist/font/` to your project's `static/fonts/` directory
-> 2. Import the CSS in `App.vue`:
-> ```vue
-> <style>
-> @import './static/fonts/vu-icons.css';
-> </style>
-> ```
+> ⚠️ **Important**: Due to WeChat Mini Program compilation limitations, you cannot use `import { VuUser } from 'vu-icons/uniapp'` to import wrapper components indirectly. You must use the `VuIcon` core component with the `name` prop. No font configuration is required.
 
 ## 📖 Props
 
+### VuIcon Core Component
+
 | Prop | Type | Default | Description |
 |------|------|---------|------|
+| name | string | '' | Icon name (recommended), e.g. `'home'`, `'search'`, `'star'` |
+| icon | string | '' | Icon name (alias, prefer `name`) |
 | size | number \| string | 24 | Icon size, supports number (px) or string (e.g., '2rem', '24px') |
 | color | string | 'currentColor' | Icon color, supports any valid CSS color value |
-| className | string | '' | Custom class name |
 | spin | boolean | false | Whether to spin the icon, useful for loading states |
+
+### Wrapper Components (VuHome, VuSearch, etc.)
+
+Wrapper components only work in Vue3 projects. They share the same Props as VuIcon, but don't require `name`/`icon` props.
+
+## 🎨 Usage Examples
+
+### Loading / Spinning Icon
+
+```vue
+<template>
+  <div>
+    <VuIcon name="loading" :size="24" color="#1890ff" spin />
+    <!-- Any icon can spin -->
+    <VuIcon name="refresh" :size="24" spin />
+  </div>
+</template>
+```
+
+### Custom Size
+
+```vue
+<template>
+  <div>
+    <VuIcon name="user" :size="16" color="#333" />
+    <VuIcon name="user" :size="24" color="#333" />
+    <VuIcon name="user" :size="32" color="#333" />
+    <VuIcon name="user" :size="48" color="#333" />
+  </div>
+</template>
+```
+
+### Custom Color
+
+```vue
+<template>
+  <div>
+    <VuIcon name="user" :size="32" color="#1890ff" />
+    <VuIcon name="user" :size="32" color="#52c41a" />
+    <VuIcon name="user" :size="32" color="#faad14" />
+    <VuIcon name="user" :size="32" color="#f5222d" />
+  </div>
+</template>
+```
+
+### Dynamic Icon Switching
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import VuIcon from 'vu-icons/icon'
+
+const isExpanded = ref(false)
+</script>
+
+<template>
+  <VuIcon :name="isExpanded ? 'chevron-up' : 'chevron-down'" @click="isExpanded = !isExpanded" />
+</template>
+```
+
+## 🔧 Technical Approach
+
+VU-Icons uses **CSS Mask + URL-encoded SVG** for icon rendering, unified across Vue3 and UniApp:
+
+```
+SVG → encodeURIComponent → data:image/svg+xml,... → mask-image (mask)
+                                                       ↓
+                                           background-color (coloring)
+```
+
+- No font files needed, no extra configuration
+- No conditional compilation, unified approach across all platforms
+- Vector rendering, crisp at any size
 
 ## 💡 IDE Support
 
@@ -108,75 +200,6 @@ VU-Icons provides enhanced support for modern IDEs (like WebStorm, VS Code).
 import icons from 'vu-icons/dist/icons.json'
 
 console.log(icons) // ['VuAdd', 'VuUser', ...]
-```
-
-## 🎨 Usage Examples
-
-### Loading Icon
-
-```vue
-<template>
-  <div>
-    <VuLoading :size="24" color="#1890ff" spin />
-    <!-- Or make any icon spin -->
-    <VuRefresh :size="24" spin />
-  </div>
-</template>
-```
-
-### Custom Size
-
-```vue
-<template>
-  <div>
-    <VuUser :size="16" color="#333" />
-    <VuUser :size="24" color="#333" />
-    <VuUser :size="32" color="#333" />
-    <VuUser :size="48" color="#333" />
-  </div>
-</template>
-```
-
-### Custom Color
-
-```vue
-<template>
-  <div>
-    <VuUser :size="32" color="#1890ff" />
-    <VuUser :size="32" color="#52c41a" />
-    <VuUser :size="32" color="#faad14" />
-    <VuUser :size="32" color="#f5222d" />
-  </div>
-</template>
-```
-
-### String Size
-
-```vue
-<template>
-  <div>
-    <VuUser size="1rem" color="#722ed1" />
-    <VuUser size="2rem" color="#722ed1" />
-    <VuUser size="3rem" color="#722ed1" />
-  </div>
-</template>
-```
-
-### With CSS Class
-
-```vue
-<template>
-  <div>
-    <VuUser :size="24" color="#333" className="icon-hover" />
-  </div>
-</template>
-
-<style>
-.icon-hover:hover {
-  opacity: 0.7;
-  cursor: pointer;
-}
-</style>
 ```
 
 ## 📋 Available Icons
@@ -194,36 +217,19 @@ For more icons, please check [ICONS](https://vuicons.qiboz.top/)
 
 2. **Build Project**
    ```bash
-   npm run build
+   npm run build:font
    ```
 
 3. **Use New Icon**
    ```vue
    <script setup>
-   import { VuNewIcon } from 'vu-icons'
+   import VuIcon from 'vu-icons/icon'
    </script>
    
    <template>
-     <VuNewIcon :size="24" color="#333" />
+     <VuIcon name="new-icon" :size="24" color="#333" />
    </template>
    ```
-
-### Project Structure
-
-```
-vu-icons/
-├── src/
-│   ├── icons/              # Original SVG icons
-│   ├── components/         # Component templates and generated components
-│   ├── build-components.ts # Component generation script
-│   └── index.ts           # Entry file
-├── examples/              # Example projects
-├── scripts/              # Build scripts
-├── dist/                # Build output (published to npm)
-├── gulpfile.js          # Gulp build configuration
-├── package.json         # Project configuration
-└── README.md           # Project documentation
-```
 
 ### Local Development
 
@@ -231,23 +237,8 @@ vu-icons/
 # Install dependencies
 npm install
 
-# Setup demos (install dependencies for examples)
-npm run setup:demos
-
-# Generate components (required before running demos)
-npm run build:components
-
-# Run Vue3 Demo
-npm run dev:vue3
-
-# Run UniApp Demo
-npm run dev:uniapp
-
 # Build project
-npm run build
-
-# Lint check
-npm run lint
+npm run build:font
 ```
 
 ## 📝 Changelog
@@ -262,36 +253,23 @@ Check [CHANGELOG.md](./CHANGELOG.md) for version update history.
 
 Contributions are welcome! If you have good suggestions or found bugs, feel free to submit Issues or Pull Requests.
 
-## 📚 Related Documentation
-
-- [ICONS.md](./ICONS.md) - Complete icon list and usage guide
-- [CHANGELOG.md](./CHANGELOG.md) - Version update log
-
 ## ❓ FAQ
 
-### Q: Why choose inline SVG instead of font icons?
+### Q: Why can't I use `import { VuHome } from 'vu-icons/uniapp'` in UniApp?
 
-A: Inline SVG has the following advantages:
-- Better performance, no extra HTTP requests
-- Supports on-demand import, reduces bundle size
-- More flexible style control
-- Better accessibility
+A: The uniapp compiler doesn't generate complete Mini Program component files for Vue components exported through JS re-exports, causing icons not to display in WeChat Mini Programs. You must directly import the `.vue` file: `import VuIcon from 'vu-icons/uniapp/icon'`.
 
-### Q: How to use in Vue 2?
+### Q: Do I need to configure font files in UniApp?
 
-A: This component library only supports Vue3. If you need a Vue2 version, consider using other icon libraries.
+A: No. v1.5.0+ uses the CSS Mask + SVG approach, which no longer depends on font files. No extra configuration is needed.
 
-### Q: Can I customize icon styles?
+### Q: Are the Vue3 and UniApp APIs consistent?
 
-A: Yes! Add custom class names through `className` prop, or modify component styles directly.
+A: Yes. The `VuIcon` core component uses identical Props across both platforms (`name`/`icon`/`size`/`color`/`spin`).
 
 ### Q: Which platforms are supported?
 
 A: Supports Vue3 and UniApp, can be used on Web, Mini Programs, Apps, and other platforms.
-
-## 🌟 Star History
-
-If this project helps you, please give it a Star to support!
 
 <div align="center">
 

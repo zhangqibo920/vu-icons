@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-07-17
+
+### Changed
+- 更新文档
+
+## [1.5.0] - 2026-07-17
+
+### Changed
+- 渲染方案从「字体图标」重构为「CSS Mask + URL编码 SVG」
+  - 不再依赖 `@font-face` 或 `loadFontFace`，无需加载字体文件
+  - 不使用 base64，使用 `encodeURIComponent` 编码 SVG（微信小程序原生支持）
+  - 不使用条件编译，Vue3 和 UniApp 统一实现
+- 新增 `VuIcon` 核心组件 + `name` 属性（推荐用法）
+  - Vue3: `import VuIcon from 'vu-icons/icon'`
+  - UniApp: `import VuIcon from 'vu-icons/uniapp/icon'`
+- 新增 `icon` 属性作为 `name` 的别名
+- 使用 CSS 变量传递 `mask-image`、`background-color`、`width/height`
+  - 解决微信小程序内联 style 不支持 `mask-image` 属性的限制
+- Vue3 端 `VuIcon.vue` 从 `<img>` + `encodeURIComponent` 改为 CSS Mask 方案
+  - 与 UniApp 端实现完全统一
+- 包装组件（VuHome 等）UniApp 版本不再支持从 `index.js` 间接导入
+  - 原因：uniapp 编译器不会为 JS 中转导出的组件生成完整小程序组件
+
+### Removed
+- 移除 `className` 属性
+- 移除微信小程序字体文件配置要求（不再需要复制 woff2/css）
+- 移除条件编译代码
+
+### Fixed
+- 修复微信小程序中图标不显示的问题（根因：SVG base64 data URI 不被支持）
+- 修复通过 `index.js` 间接导入的组件在微信小程序中不渲染的问题
+
 ## [1.3.6] - 2026-07-13
 
 ### Changed

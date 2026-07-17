@@ -238,6 +238,15 @@ function copyBaseComponents(): void {
   console.log('✅ Base components copied')
 }
 
+function copyUniAppBaseComponents(): void {
+  console.log('📦 Copying UniApp base components to uniapp dir...')
+
+  fs.copyFileSync(path.join(BASE_DIR, 'VuIconUniApp.vue'), path.join(UNIAPP_DIR, 'VuIcon.vue'))
+  fs.copyFileSync(path.join(DIST, 'icons-data.js'), path.join(UNIAPP_DIR, 'icons-data.js'))
+
+  console.log('✅ UniApp base components copied')
+}
+
 // ── Phase 3: Generate Wrapper Components ──
 
 function generateWrapperComponents(iconNames: string[]): void {
@@ -272,7 +281,7 @@ const props = withDefaults(defineProps<{
 
     // UniApp wrapper
     const uniappContent = `<script>
-import VuIcon from '../VuIconUniApp.vue'
+import VuIcon from './VuIcon.vue'
 
 export default {
   name: '${componentName}',
@@ -287,8 +296,18 @@ export default {
 </script>
 
 <template>
-  <VuIcon icon="${iconName}" :size="size" :color="color" :spin="spin" :class="className" />
-</template>`
+  <view class="vu-icon-wrapper">
+    <VuIcon icon="${iconName}" :size="size" :color="color" :spin="spin" :class="className" />
+  </view>
+</template>
+
+<style scoped>
+.vu-icon-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+</style>`
 
     writeFileSync(path.join(VUE3_DIR, `${componentName}.vue`), vue3Content)
     writeFileSync(path.join(UNIAPP_DIR, `${componentName}.vue`), uniappContent)
@@ -327,8 +346,9 @@ function generateExports(iconNames: string[]): void {
       return `export { default as ${componentName} } from './${componentName}.vue'`
     })
     .join('\n')
-  writeFileSync(path.join(UNIAPP_DIR, 'index.ts'), uniappExports)
-  writeFileSync(path.join(UNIAPP_DIR, 'index.js'), uniappExports)
+  const uniappFullExports = `export { default as VuIcon } from './VuIcon.vue'\n${uniappExports}`
+  writeFileSync(path.join(UNIAPP_DIR, 'index.ts'), uniappFullExports)
+  writeFileSync(path.join(UNIAPP_DIR, 'index.js'), uniappFullExports)
 
   console.log('✅ Entry files generated')
 }
@@ -499,6 +519,9 @@ async function main(): Promise<void> {
 
   // Phase 3: Generate wrapper components
   generateWrapperComponents(iconNames)
+
+  // Phase 3.5: Copy UniApp base components (after resetDir in wrapper generation)
+  copyUniAppBaseComponents()
 
   // Phase 4: Generate exports and types
   generateExports(iconNames)
