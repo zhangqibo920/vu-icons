@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.4] - 2026-07-18
+
+### Fixed
+- 修复微信小程序中 `common_vendor._export_sfc is not a function` 错误
+- 将 iconData 内联到 VuIcon.vue 中，避免 UniApp 编译 node_modules 时的模块解析问题
+
 ## [1.5.2] - 2026-07-18
 
 ### Changed
